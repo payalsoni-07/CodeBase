@@ -19,7 +19,7 @@ class get_public_secret:
         self.chunk_size = int(100)
         self.chunks = list(self.divide_chunks(self.data, self.chunk_size))
         #generate fileid
-        self.fileid = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(10))
+        self.fileid =  filename
         #generate userid
         self.userid = ''.join(random.choice(string.ascii_uppercase + string.digits) for _ in range(10))
         self.divide_chunks(self.chunks,self.chunk_size)
