@@ -13,7 +13,7 @@ class get_public_secret:
         self.version = 1
         self.autheticator = None
         self.tag = None
-        self.file = open(os.path.join(sys.path[-1],"Cloud",filename), 'r')
+        self.file = open(os.path.join(os.pardir,"Cloud",filename), 'r')
         self.data = self.file.read()
         self.file.close()
         self.chunk_size = int(100)

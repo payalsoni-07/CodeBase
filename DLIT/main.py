@@ -24,3 +24,11 @@ if __name__ == '__main__':
             linkedList.make_list(param.version,param.timestamp,param.chunks)
             make_list_block(name,setup.get_user_id(),linkedList.double_linked_list)
             print("File inserted successfully")
+        elif ch == 2:
+            name = input("Enter the file name: ")
+            for i in DLIT:
+                if i['fileid'] == name:
+                    doubly_list = i['list']
+                    print(doubly_list)
+                    
+                
