@@ -29,4 +29,7 @@ class get_public_secret:
         for i in range(0, len(l), n):
             yield l[i:i + n]
             self.timestamp.append(time.time())
+    
+    def get_block_no(self,pos):
+        return pos//self.chunk_size
 
