@@ -17,3 +17,25 @@ class doubly_list:
         self.double_linked_list[block_no]['chunk'] = updated_data
         self.double_linked_list[block_no]['version'] += 1
         self.double_linked_list[block_no]['timestamp'] = time.time()
+
+    def remove_data(self,spos,epos,first_block_no,last_block_no):
+        #remove data
+        if first_block_no == last_block_no:
+            current_data = self.double_linked_list[first_block_no]['chunk']
+            updated_data = current_data[:spos] + current_data[epos:]
+            self.double_linked_list[first_block_no]['chunk'] = updated_data
+            self.double_linked_list[first_block_no]['version'] += 1
+            self.double_linked_list[first_block_no]['timestamp'] = time.time()
+        else:
+            current_data = self.double_linked_list[first_block_no]['chunk']
+            updated_data = current_data[:spos]
+            self.double_linked_list[first_block_no]['chunk'] = updated_data
+            self.double_linked_list[first_block_no]['version'] += 1
+            self.double_linked_list[first_block_no]['timestamp'] = time.time()
+            current_data = self.double_linked_list[last_block_no]['chunk']
+            updated_data = current_data[epos:]
+            self.double_linked_list[last_block_no]['chunk'] = updated_data
+            self.double_linked_list[last_block_no]['version'] += 1
+            self.double_linked_list[last_block_no]['timestamp'] = time.time()
+            for i in range(first_block_no+1,last_block_no):
+                self.double_linked_list.remove(self.double_linked_list[i])

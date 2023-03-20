@@ -36,7 +36,21 @@ if __name__ == '__main__':
             block_no = param.get_block_no(pos)
             linkedList.modify_data(pos,data,block_no)
             index['list'] = linkedList.double_linked_list
-           
             print(linkedList.double_linked_list[block_no]['chunk'])
-                    
+        elif ch == 3:
+            name = input("Enter the file name: ")
+            
+            for i in DLIT:
+                if i['fileid'] == name:
+                    index = i
+                    break
+            spos = int(input("Enter the start position of data block to be removed: "))
+            epos = int(input("Enter the end position of data block to be removed: "))
+            first_block_no = param.get_block_no(spos)
+            last_block_no = param.get_block_no(epos)
+            linkedList.remove_data(spos,epos,first_block_no,last_block_no)
+            DLIT[DLIT.index(index)]['list'] = linkedList.double_linked_list
+           
+        else:
+            sys.exit(0)
                 
