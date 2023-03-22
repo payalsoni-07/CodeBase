@@ -2,17 +2,12 @@ import setup
 import linkedList
 import os
 import sys
-
-
-DLIT =[]
-def make_list_block(fileid,userid,list_doubly):
-    DLIT.append({'fileid':fileid,'userid':userid,'list':list_doubly})
-
+import dlit
 #main function
 
 if __name__ == '__main__':
  #2-D doubly linked list
-    linkedList = linkedList.doubly_list()
+    DLIT = dlit.DLIT()
     while True:
         print("enter 1: for Insertion of data blocks")
         print("enter 2: for Modification of data")
@@ -22,35 +17,35 @@ if __name__ == '__main__':
         if ch == 1:
             name = input("Enter the file name: ")
             param = setup.get_public_secret(name)
-            linkedList.make_list(param.version,param.timestamp,param.chunks)
-            make_list_block(name,param.userid,linkedList.double_linked_list)
+            ll = linkedList.doubly_list()
+            ll.make_list(param.version,param.timestamp,param.chunks)
+            DLIT.make_list_block(param.fileid,param.userid,ll.head,param.chunk_size)
             
         elif ch == 2:
             name = input("Enter the file name: ")
-            for i in DLIT:
-                if i['fileid'] == name:
-                    index = i
+            for i in range(len(DLIT.DLIT)):
+                if DLIT.DLIT[i]['fileid'] == name:
+                    file_index = i
                     break
             pos = int(input("Enter the position of data block to be modified: "))
             data = input("Enter the data to be modified: ")
             block_no = param.get_block_no(pos)
-            linkedList.modify_data(pos,data,block_no)
-            index['list'] = linkedList.double_linked_list
-            print(linkedList.double_linked_list[block_no]['chunk'])
+            DLIT.modify_data(pos,data,block_no,file_index)
         elif ch == 3:
             name = input("Enter the file name: ")
-            
-            for i in DLIT:
-                if i['fileid'] == name:
-                    index = i
+            for i in range(len(DLIT.DLIT)):
+                if DLIT.DLIT[i]['fileid'] == name:
+                    file_index = i
                     break
             spos = int(input("Enter the start position of data block to be removed: "))
             epos = int(input("Enter the end position of data block to be removed: "))
             first_block_no = param.get_block_no(spos)
             last_block_no = param.get_block_no(epos)
-            linkedList.remove_data(spos,epos,first_block_no,last_block_no)
-            DLIT[DLIT.index(index)]['list'] = linkedList.double_linked_list
-           
+            DLIT.remove_data(spos,epos,first_block_no,last_block_no,file_index)
+
         else:
             sys.exit(0)
-                
+        for i in range(len(DLIT.DLIT)):
+            print(DLIT.DLIT[i]['fileid'])
+            head = DLIT.DLIT[i]['list']
+            print(head)

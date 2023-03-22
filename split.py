@@ -29,13 +29,24 @@ def no_of_blocks(name):
             index = i
             break
     return fb[index][1]
+
+def total_blocks():
+    blocks = 0
+    for i in range(len(fb)):
+        blocks += fb[i][1]
+    return blocks
 def find_block_range(name):
-    index = 0
     for i in range(len(fb)):
         if fb[i][0] == name:
             index = i
             break
-    return fb[index-1][1]
+    if index>0:
+        blocks = 0
+        for i in range(index):
+            blocks += fb[i][1]
+        return blocks
+    else:
+        return 0
 #generate random secret key
 def generate_secret_key():
     key  = Fernet.generate_key()
@@ -85,19 +96,15 @@ if __name__ =="__main__":
         if ch == 1:
             filename = input("Enter the file name to perform operations: ")
             filesize = os.path.getsize(os.path.join(sys.path[0],"Cloud",filename))
-            i = 1
-            t = 0
-            total =0 
             t1 = time.time()
+            i = 1
+            bl = total_blocks()
+            print(bl)
             for block in split_file(filename, block_size):
-                #t1 = time.time()
                 encrypted = encrypt(block,key)
-                value = encrypted
-                e.insert(i, value)
-                #t2 = time.time()
+                e.insert(bl+i, encrypted)
                 i+=1
-                #t = max(t, t2-t1)
-            fb.append((filename,i))
+            fb.append((filename,i-1))
             t2 = time.time()
             print("Time taken for insertion is ", t2-t1)
             print("No. of blocks in the file: ", i-1)
@@ -105,6 +112,7 @@ if __name__ =="__main__":
         if ch == 2:
             name = input("Enter the file name: ")
             bl = find_block_range(name)
+            print(bl)
             id = int(input("Enter the block no.: "))
             t1 = time.time()
             print(e.search(bl+id))
@@ -159,8 +167,7 @@ if __name__ =="__main__":
         if ch == 5:
             break   
         
-        # print("Global depth: ", e.global_depth)
-        # print("Bucket_count: ", e.bucket_count())
-        # print("No. of Split: ", e.split_count)
-
-    
+        print("Global depth: ", e.global_depth)
+        print("Bucket_count: ", e.bucket_count())
+        print("No. of Split: ", e.split_count)
+        

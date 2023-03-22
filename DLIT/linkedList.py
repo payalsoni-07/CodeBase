@@ -1,41 +1,29 @@
 #double linked list using dequeue
-import collections
-import time
 
+class node:
+    def __init__(self,version,timestamp,chunk):
+        self.version = version
+        self.timestamp = timestamp
+        self.chunk = chunk
+        self.next = None
+        self.prev = None
 class doubly_list:
     def __init__(self):
-        self.double_linked_list = collections.deque()
+        self.head = None
+        self.curr = None
+    def append(self,version,timestamp,chunk):
+        if self.head is None:
+            self.head = node(version,timestamp,chunk)
+            self.curr = self.head
+        else:
+            new_node = node(version,timestamp,chunk)
+            new_node.next = None
+            new_node.prev = self.curr
+            self.curr.next = new_node
+            self.curr = new_node
+    
     def make_list(self,version,timestamp,chunks):
         #create double linked list
         size = len(chunks)
         for i in range(size):
-            self.double_linked_list.append({'version':version,'timestamp':timestamp[i],'chunk':chunks[i]})
-    def modify_data(self,pos,data,block_no):
-        #modify data
-        current_data = self.double_linked_list[block_no]['chunk']
-        updated_data = current_data[:pos] + data + current_data[pos+len(data):]
-        self.double_linked_list[block_no]['chunk'] = updated_data
-        self.double_linked_list[block_no]['version'] += 1
-        self.double_linked_list[block_no]['timestamp'] = time.time()
-
-    def remove_data(self,spos,epos,first_block_no,last_block_no):
-        #remove data
-        if first_block_no == last_block_no:
-            current_data = self.double_linked_list[first_block_no]['chunk']
-            updated_data = current_data[:spos] + current_data[epos:]
-            self.double_linked_list[first_block_no]['chunk'] = updated_data
-            self.double_linked_list[first_block_no]['version'] += 1
-            self.double_linked_list[first_block_no]['timestamp'] = time.time()
-        else:
-            current_data = self.double_linked_list[first_block_no]['chunk']
-            updated_data = current_data[:spos]
-            self.double_linked_list[first_block_no]['chunk'] = updated_data
-            self.double_linked_list[first_block_no]['version'] += 1
-            self.double_linked_list[first_block_no]['timestamp'] = time.time()
-            current_data = self.double_linked_list[last_block_no]['chunk']
-            updated_data = current_data[epos:]
-            self.double_linked_list[last_block_no]['chunk'] = updated_data
-            self.double_linked_list[last_block_no]['version'] += 1
-            self.double_linked_list[last_block_no]['timestamp'] = time.time()
-            for i in range(first_block_no+1,last_block_no):
-                self.double_linked_list.remove(self.double_linked_list[i])
+            self.append(version,timestamp[i],chunks[i])

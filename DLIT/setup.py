@@ -2,7 +2,6 @@ import random
 import string
 import time
 import os
-import sys
 #public and secret using 
 class get_public_secret:
     
@@ -13,6 +12,7 @@ class get_public_secret:
         self.version = 1
         self.autheticator = None
         self.tag = None
+        self.no_of_blocks = 0
         self.file = open(os.path.join(os.pardir,"Cloud",filename), 'r')
         self.data = self.file.read()
         self.file.close()
@@ -29,7 +29,8 @@ class get_public_secret:
         for i in range(0, len(l), n):
             yield l[i:i + n]
             self.timestamp.append(time.time())
+            self.no_of_blocks += 1
     
     def get_block_no(self,pos):
-        return pos//self.chunk_size
+        return (pos//self.chunk_size)+1
 
