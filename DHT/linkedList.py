@@ -1,13 +1,10 @@
-#double linked list using dequeue
-
 class node:
     def __init__(self,version,timestamp,chunk):
         self.version = version
         self.timestamp = timestamp
         self.chunk = chunk
         self.next = None
-        self.prev = None
-class doubly_list:
+class linked_list:
     def __init__(self):
         self.head = None
     def append(self,version,timestamp,chunk):
@@ -19,11 +16,10 @@ class doubly_list:
             while(ptr):
                 if ptr.next is None:
                     ptr.next = new_node
-                    new_node.prev = ptr
                     break
                 ptr = ptr.next
     def make_list(self,version,timestamp,chunks):
-        #create double linked list
+        #create linked list
         size = len(chunks)
         for i in range(size):
             self.append(version,timestamp[i],chunks[i])
