@@ -76,7 +76,7 @@ class ExtendibleHash:
             if k == key:
                 bucket.bucket.remove((k,v))
                 bucket.bucket.append((k,value))
-                return "Updated"
+                return 
         return "Not found"
 
     def delete(self, key):
@@ -86,7 +86,7 @@ class ExtendibleHash:
             if k == key:
                 bucket.bucket.remove((k,v))
                 self.merge(directory_index)
-                return "Deleted"
+                return 
         return "Not found"
     
     def merge(self, directory_index):

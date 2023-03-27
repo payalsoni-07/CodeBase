@@ -13,12 +13,17 @@ if __name__ == '__main__':
         ch = int(input("Enter your choice"))
         if ch == 1:
             filename = input("Enter the file name: ")
+            t1 = time.time()
             sp = split.split()  
             sp.split_file(filename)
+            t2 = time.time()
+            print("Time taken for setup file: ",t2-t1)
             iter = 0
             remaining_blocks = sp.total_blocks
+        
             DCHL.fb.append((filename,sp.total_blocks))
             DCHL.block_size = sp.block_size
+            t1 = time.time()
             while(remaining_blocks > 0):
                 if remaining_blocks > DCHL.length:
                     ll = linkedlist.linkedlist()
@@ -35,12 +40,15 @@ if __name__ == '__main__':
                     DCHL.DCHL[-1][0] = remaining_blocks
                     remaining_blocks = 0
                     iter+=1
+            t2 = time.time()
+            print("Time taken for inserrt into DCHL: ",t2-t1)
         elif ch == 2:
             filename = input("Enter the file name: ")
             pos = int(input("Enter the position from where to be inserted: "))
             data = input("Enter the data to be inserted: ")
             current_block = sp.blocknumber(pos)
             pos = pos%sp.block_size
+            t1 = time.time()
             index,block_no = DCHL.getindex(filename,current_block,pos)
             j,ptr = DCHL.DCHL[index]
             for i in range(block_no):
@@ -62,10 +70,13 @@ if __name__ == '__main__':
                 ptr.version += 1
                 ptr.timestamp = time.time()
                 rem_data = None
+            t2 = time.time()
+            print("Time taken for modification: ",t2-t1)
         elif ch == 3:
             filename = input("Enter the file name: ")
             spos = int(input("Enter the position from where to be removed: "))
             epos = int(input("Enter the position till where to be removed: "))
+            t1 = time.time()
             first_block = sp.blocknumber(spos)
             last_block = sp.blocknumber(epos)
             spos = spos%sp.block_size
@@ -136,6 +147,8 @@ if __name__ == '__main__':
                 total_to_remove = last_index - first_index - 1
                 for i in range(total_to_remove):
                     DCHL.DCHL.pop(first_index+1)
+            t2 = time.time()
+            print("Time taken for deletion: ",float(t2-t1))
         else:
             break
         for i in range(len(DCHL.DCHL)):

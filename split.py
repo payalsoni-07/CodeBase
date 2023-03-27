@@ -96,19 +96,20 @@ if __name__ =="__main__":
         if ch == 1:
             filename = input("Enter the file name to perform operations: ")
             filesize = os.path.getsize(os.path.join(sys.path[0],"Cloud",filename))
-            t1 = time.time()
             i = 1
             bl = total_blocks()
+            t = 0
             print(bl)
             for block in split_file(filename, block_size):
                 encrypted = encrypt(block,key)
+                t1 = time.time()
                 e.insert(bl+i, encrypted)
+                t2 = time.time()
+                t+=t2-t1
                 i+=1
             fb.append((filename,i-1))
-            t2 = time.time()
-            print("Time taken for insertion is ", t2-t1)
+            print("Time taken for insertion is ", t)
             print("No. of blocks in the file: ", i-1)
-            #print("Maximum time in insertion is ", t)
         if ch == 2:
             name = input("Enter the file name: ")
             bl = find_block_range(name)
@@ -131,7 +132,7 @@ if __name__ =="__main__":
                 modified_data += block_data[epos%100:]
                 value = encrypt(modified_data,key)
                 t1 = time.time()
-                print(e.delete(bl+first_block))
+                e.delete(bl+first_block)
                 t2 = time.time()
                 print("Time taken for deletion is ", t2-t1)
                 e.insert(bl+first_block,value)
@@ -144,7 +145,7 @@ if __name__ =="__main__":
                 t1 = time.time()
                 for i in range(first_block,last_block+1):
                     id = bl+i
-                    print(e.delete(id))
+                    e.delete(id)
                 t2 = time.time()
                 print("Time taken for deletion is ", t2-t1)
                 e.insert(bl+first_block,value)
@@ -160,7 +161,7 @@ if __name__ =="__main__":
             t1 = time.time()
             encrypted = encrypt(updated_data,key)
             id = bl+blockno
-            print(e.update(id,encrypted ))
+            e.update(id,encrypted )
             t2 = time.time()
             print("Time taken for updation is ", t2-t1)
 
