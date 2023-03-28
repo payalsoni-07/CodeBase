@@ -125,16 +125,14 @@ if __name__ =="__main__":
             bl = find_block_range(name)
             spos = int(input("Enter the start position from where to delete data: "))
             epos = int(input("Enter the end position till where to delete data: "))
+            t1 = time.time()
             first_block,last_block = get_block_no(spos,epos,name)
             if first_block == last_block:
                 block_data = get_block_data(name,first_block)
                 modified_data = block_data[:spos%100]
                 modified_data += block_data[epos%100:]
                 value = encrypt(modified_data,key)
-                t1 = time.time()
                 e.delete(bl+first_block)
-                t2 = time.time()
-                print("Time taken for deletion is ", t2-t1)
                 e.insert(bl+first_block,value)
             else:
                 first_block_data = get_block_data(name,first_block)
@@ -142,13 +140,12 @@ if __name__ =="__main__":
                 modified_data = first_block_data[:spos%100]
                 modified_data += last_block_data[epos%100:]
                 value = encrypt(modified_data,key)
-                t1 = time.time()
                 for i in range(first_block,last_block+1):
                     id = bl+i
                     e.delete(id)
-                t2 = time.time()
-                print("Time taken for deletion is ", t2-t1)
                 e.insert(bl+first_block,value)
+            t2= time.time()
+            print("Time in Deletion",t2-t1)
 
         if ch == 4:
             name = input("Enter the file name: ")
@@ -158,10 +155,11 @@ if __name__ =="__main__":
             blockno = pos//100
             block_data = get_block_data(name,blockno)
             updated_data = block_data+data
-            t1 = time.time()
             encrypted = encrypt(updated_data,key)
+            t1 = time.time()
             id = bl+blockno
-            e.update(id,encrypted )
+            for i in range(1,1000):
+                e.update(id,encrypted )
             t2 = time.time()
             print("Time taken for updation is ", t2-t1)
 

@@ -33,12 +33,13 @@ if __name__ == '__main__':
             pos = int(input("Enter the position of data block to be modified: "))
             data = input("Enter the data to be modified: ")
             t1 = time.time()
-            for i in range(len(DHT.DHT)):
-                if DHT.DHT[i]['fileid'] == name:
-                    file_index = i
-                    break            
-            block_no = param.get_block_no(pos)
-            DHT.modify_data(pos,data,block_no,file_index)
+            for i in range(1,1000):
+                for i in range(len(DHT.DHT)):
+                    if DHT.DHT[i]['fileid'] == name:
+                        file_index = i
+                        break            
+                block_no = param.get_block_no(pos)
+                DHT.modify_data(pos,data,block_no,file_index)
             t2 = time.time()
             print("Time taken to modify: ",t2-t1)
         elif ch == 3:
